@@ -1,5 +1,6 @@
 import 'package:example/camera_scan.dart';
 import 'package:example/image_scan.dart';
+import 'package:example/longin.dart';
 import 'package:example/mlkit_text_recognize.dart';
 import 'package:fl_mlkit_text_recognize/fl_mlkit_text_recognize.dart';
 import 'package:flutter/material.dart';
@@ -20,14 +21,15 @@ class _AppState extends State<_App> {
   @override
   Widget build(BuildContext context) {
     return ExtendedScaffold(
-        appBar: AppBarText('Fl MlKit Text Recognize'),
+        appBar: AppBarText('러너 한글'),
         padding: const EdgeInsets.all(30),
         children: <Widget>[
           const SizedBox(height: 10),
           ElevatedText(
-              onPressed: () => openCamera(), text: 'Camera recognition'),
+              //onPressed: () => openCamera(), text: 'Camera recognition\n 카메라로 좔영'),
+              onPressed: () => startLogin(), text: 'LoginPage'),
           const SizedBox(height: 10),
-          ElevatedText(onPressed: scanImage, text: 'Image recognition'),
+          ElevatedText(onPressed: scanImage, text: 'Image recognition\n 이미지로 문자식별'),
           const SizedBox(height: 10),
         ]);
   }
@@ -48,6 +50,15 @@ class _AppState extends State<_App> {
     if (isIOS) hasPermission = true;
     if (hasPermission) push(const FlMlKitTextRecognizePage());
   }
+
+  Future<void> startLogin() async {
+    bool hasPermission = false;
+    if (isAndroid) hasPermission = await getPermission(Permission.camera);
+    if (isIOS) hasPermission = true;
+    if (hasPermission) push(const LoginPage());
+  }
+
+
 }
 
 class ShowCode extends StatelessWidget {

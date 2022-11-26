@@ -18,18 +18,19 @@ class _ImageScanPageState extends State<ImageScanPage> {
   String? path;
   AnalysisTextModel? model;
   List<String> types =
-      RecognizedLanguage.values.builder((item) => item.toString());
+      RecognizedLanguage.values.builder((item)  => item.toString().replaceAll('RecognizedLanguage.', ''));
+
 
   int? selectIndex;
 
   @override
   Widget build(BuildContext context) {
     return ExtendedScaffold(
-        appBar: AppBarText('San file image'),
+        appBar: AppBarText('이미지로 문자식별'),
         padding: const EdgeInsets.all(20),
         isScroll: true,
         children: <Widget>[
-          ElevatedText(onPressed: openGallery, text: 'Select Picture'),
+          ElevatedText(onPressed: openGallery, text: 'Select Picture/포토 선택'),
           ElevatedButton(
               onPressed: () {},
               child: DropdownMenuButton.material(
@@ -41,7 +42,8 @@ class _ImageScanPageState extends State<ImageScanPage> {
                         RecognizedLanguage.values[selectIndex!]);
                   },
                   defaultBuilder: (int? index) => BText(index == null
-                      ? 'Select Recognized Language'
+                      ? 'Select Recognized Language\n '
+                                '언어선택'
                       : types[index]),
                   itemBuilder: (int index) => Container(
                       padding: const EdgeInsets.symmetric(
@@ -50,7 +52,7 @@ class _ImageScanPageState extends State<ImageScanPage> {
                           border:
                               Border(bottom: BorderSide(color: Colors.grey))),
                       child: BText(types[index], color: Colors.black)))),
-          ElevatedText(onPressed: scanByte, text: 'Scanning'),
+          ElevatedText(onPressed: scanByte, text: 'Scanning \n 식별'),
           ShowText('path', path),
           if (path != null && path!.isNotEmpty)
             Container(

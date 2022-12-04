@@ -1,19 +1,18 @@
+import 'package:camera/camera.dart';
 import 'package:example/camera_scan.dart';
 import 'package:example/image_scan.dart';
 import 'package:example/longin.dart';
 import 'package:example/mlkit_text_recognize.dart';
+import 'package:example/take_photo.dart';
 import 'package:fl_mlkit_text_recognize/fl_mlkit_text_recognize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curiosity/flutter_curiosity.dart';
 import 'package:flutter_waya/flutter_waya.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-// void main() {
-//   runApp(ExtendedWidgetsApp(
-//       routes: {
-//         '/123':(BuildContext context)=>_App(),
-//       },));
-// }
+
+
+
 
 class AppPage extends StatefulWidget {
   @override
@@ -21,15 +20,18 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return ExtendedScaffold(
         appBar: AppBarText('러너 한글'),
         padding: const EdgeInsets.all(30),
+        backgroundColor: Colors.amber[100],
         children: <Widget>[
           const SizedBox(height: 10),
           ElevatedText(
-              onPressed: () => takePhoto(), text: 'Take Photo'),
+              onPressed: () => takePhoto(), text: 'Take Photo\n 사진 찍어'),
           const SizedBox(height: 10),
           ElevatedText(onPressed: scanImage, text: 'Image recognition\n 이미지로 문자식별'),
           const SizedBox(height: 10),
@@ -57,7 +59,12 @@ class _AppPageState extends State<AppPage> {
     bool hasPermission = false;
     if (isAndroid) hasPermission = await getPermission(Permission.camera);
     if (isIOS) hasPermission = true;
-    if (hasPermission) push(const LoginPage());
+
+    //跳转到take_photo页面
+    WidgetsFlutterBinding.ensureInitialized();
+    final cameras = await availableCameras();
+    final firstCamera = cameras.first;
+    if (hasPermission) push( TakePictureScreen(camera: firstCamera));
   }
 
 

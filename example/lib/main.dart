@@ -8,16 +8,19 @@ import 'package:flutter_curiosity/flutter_curiosity.dart';
 import 'package:flutter_waya/flutter_waya.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void main() {
-  runApp(ExtendedWidgetsApp(home: _App()));
-}
+// void main() {
+//   runApp(ExtendedWidgetsApp(
+//       routes: {
+//         '/123':(BuildContext context)=>_App(),
+//       },));
+// }
 
-class _App extends StatefulWidget {
+class AppPage extends StatefulWidget {
   @override
-  _AppState createState() => _AppState();
+  _AppPageState createState() => _AppPageState();
 }
 
-class _AppState extends State<_App> {
+class _AppPageState extends State<AppPage> {
   @override
   Widget build(BuildContext context) {
     return ExtendedScaffold(

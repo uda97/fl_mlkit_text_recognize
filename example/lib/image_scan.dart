@@ -7,6 +7,8 @@ import 'package:flutter_curiosity/flutter_curiosity.dart';
 import 'package:flutter_waya/flutter_waya.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+
+
 class ImageScanPage extends StatefulWidget {
   const ImageScanPage({Key? key}) : super(key: key);
 

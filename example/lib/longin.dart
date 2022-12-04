@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:example/main.dart';
+import 'package:flutter_waya/flutter_waya.dart';
+
 
 import 'common/assets.dart';
 import 'common/widgets.dart';
 
+
+
+
+main() {
+  runApp(const ExtendedWidgetsApp(home: LoginPage(),));
+}
 
 /// 登录页面
 class LoginPage extends StatefulWidget {
@@ -29,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           // Username or E-Mail
           const Text(
-            "ID or E-Mail",
+            "계정",
             style: TextStyle(
               fontSize: 15,
               color: Color(0xff838383),
@@ -50,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
               });
             },
             decoration: InputDecoration(
-              hintText: "@",
+              hintText: "ID or email",
               // labelText: "Username or E-Mail",
               // labelStyle: const TextStyle(
               //   fontSize: 15,
@@ -76,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
 
           // Password
           const Text(
-            "Password",
+            "비밀번호",
             style: TextStyle(
               fontSize: 15,
               color: Color(0xff838383),
@@ -86,13 +95,7 @@ class _LoginPageState extends State<LoginPage> {
           TextField(
             obscureText: true,
             decoration: InputDecoration(
-              hintText: "6 digits",
-              // labelText: "Password",
-              // labelStyle: const TextStyle(
-              //   fontSize: 15,
-              //   color: Color(0xff838383),
-              //   fontWeight: FontWeight.w300,
-              // ),
+              hintText: "6 자리",
               prefixIcon: Image.asset(
                 AssetsImages.iconLockPng,
                 width: 23,
@@ -117,8 +120,10 @@ class _LoginPageState extends State<LoginPage> {
 
           // Sign In
           ButtonWidget(
-            text: 'Sign In',
-            onPressed: () {},
+            text: '들어가기 / 가입',
+            onPressed: () {
+              goToMainPage();
+            },
             height: 60,
             widget: double.infinity,
             radius: 18,
@@ -133,18 +138,19 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               // 文字
               const Text(
-                "Don’t have an account? ",
+                "약관의 보셨어요?",
                 style: TextStyle(
                   fontSize: 15,
                   color: Color(0xff171717),
                   fontWeight: FontWeight.w300,
                 ),
               ),
+              //文字2
               // 按钮
               TextButton(
                 onPressed: () {},
                 child: const Text(
-                  "Sign Up",
+                  "동의",
                   style: TextStyle(
                     fontSize: 15,
                     color: Color(0xff0274bc),
@@ -154,6 +160,18 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ],
           ),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text("해당 계좌 없으면 즉시가입"
+                  ,style: TextStyle(
+                    fontSize: 15,
+                    color: Color(0xffbc0202),
+                    fontWeight: FontWeight.w300,
+                  )
+              ),
+            ],),
         ],
       ),
     );
@@ -162,23 +180,23 @@ class _LoginPageState extends State<LoginPage> {
   // 主视图
   Widget _buildView() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(15, 150, 15, 0),
+      padding: const EdgeInsets.fromLTRB(15, 100, 15, 0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // 图标
           Image.asset(
             AssetsImages.logoPng,
-            width: 60,
+            width: 100,
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
 
           // 主标
           const Text(
-            "Let’s Sign You In",
+            "러노 한글",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 50,
               color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
@@ -188,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
 
           // 子标
           const Text(
-            "Welcome back, you’ve been missed!",
+            "러노 한글 오신 것을 화영합니다.",
             style: TextStyle(
               fontSize: 13,
               color: Colors.white,
@@ -204,12 +222,20 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
+//build
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.amber,
       body: SingleChildScrollView(child: _buildView()),
     );
+  }
+
+
+//登录成功后跳转到主页
+  goToMainPage(){
+    Navigator.pop(context);
+    Navigator.push(context, MaterialPageRoute(builder: (context)=> AppPage()));
+    showToast('Login success');
   }
 }

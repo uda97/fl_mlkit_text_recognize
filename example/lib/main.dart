@@ -29,8 +29,7 @@ class _AppPageState extends State<AppPage> {
         children: <Widget>[
           const SizedBox(height: 10),
           ElevatedText(
-              //onPressed: () => openCamera(), text: 'Camera recognition\n 카메라로 좔영'),
-              onPressed: () => startLogin(), text: 'LoginPage'),
+              onPressed: () => takePhoto(), text: 'Take Photo'),
           const SizedBox(height: 10),
           ElevatedText(onPressed: scanImage, text: 'Image recognition\n 이미지로 문자식별'),
           const SizedBox(height: 10),
@@ -54,7 +53,7 @@ class _AppPageState extends State<AppPage> {
     if (hasPermission) push(const FlMlKitTextRecognizePage());
   }
 
-  Future<void> startLogin() async {
+  Future<void> takePhoto() async {
     bool hasPermission = false;
     if (isAndroid) hasPermission = await getPermission(Permission.camera);
     if (isIOS) hasPermission = true;

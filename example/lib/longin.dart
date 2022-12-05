@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:example/main.dart';
 import 'package:flutter_waya/flutter_waya.dart';
 
-
 import 'common/assets.dart';
 import 'common/widgets.dart';
 
-
-
-
 main() {
-  runApp(const ExtendedWidgetsApp(home: LoginPage(),));
+  runApp(const ExtendedWidgetsApp(
+    home: LoginPage(),
+  ));
 }
 
 /// 登录页面
@@ -24,6 +22,19 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   // 账号输入是否有效
   bool isUserNameValid = false;
+  bool isPasswordValid = false;
+  String userName = "";
+  String password = "";
+
+//登录成功后跳转到主页
+  goToMainPage() {
+    showToast('$userName $password');
+    if (isUserNameValid && isPasswordValid) {
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AppPage()));
+    }
+  }
 
   // 登录表单
   Widget _buildForm() {
@@ -48,24 +59,18 @@ class _LoginPageState extends State<LoginPage> {
           TextField(
             onChanged: (value) {
               bool valid = false;
-              if (value.length >= 6) {
+              if (value.length >= 6 && value == '123456') {
                 valid = true;
               } else {
                 valid = false;
               }
-
               setState(() {
                 isUserNameValid = valid;
+                userName = value;
               });
             },
             decoration: InputDecoration(
               hintText: "ID or email",
-              // labelText: "Username or E-Mail",
-              // labelStyle: const TextStyle(
-              //   fontSize: 15,
-              //   color: Color(0xff838383),
-              //   fontWeight: FontWeight.w300,
-              // ),
               prefixIcon: Image.asset(
                 AssetsImages.iconUserPng,
                 width: 23,
@@ -73,9 +78,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
               suffixIcon: isUserNameValid == true
                   ? const Icon(
-                Icons.done,
-                color: Colors.green,
-              )
+                      Icons.done,
+                      color: Colors.green,
+                    )
                   : null,
             ),
           ),
@@ -93,27 +98,38 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
           TextField(
-            obscureText: true,
-            decoration: InputDecoration(
-              hintText: "6 자리",
-              prefixIcon: Image.asset(
-                AssetsImages.iconLockPng,
-                width: 23,
-                height: 23,
-              ),
-              suffixIcon: TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "Forget?",
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Color(0xff0274bc),
-                    fontWeight: FontWeight.w500,
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "6 자리",
+                prefixIcon: Image.asset(
+                  AssetsImages.iconLockPng,
+                  width: 23,
+                  height: 23,
+                ),
+                suffixIcon: TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Forget?",
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Color(0xff0274bc),
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ),
+              onChanged: (value) {
+                bool valid = false;
+                if (value.length >= 6 && value == '123456') {
+                  valid = true;
+                } else {
+                  valid = false;
+                }
+                setState(() {
+                  isPasswordValid = valid;
+                  password = value;
+                });
+              }),
 
           // 间距
           const SizedBox(height: 30),
@@ -164,14 +180,14 @@ class _LoginPageState extends State<LoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("해당 계좌 없으면 즉시가입"
-                  ,style: TextStyle(
+              Text("해당 계좌 없으면 즉시가입",
+                  style: TextStyle(
                     fontSize: 15,
                     color: Color(0xffbc0202),
                     fontWeight: FontWeight.w300,
-                  )
-              ),
-            ],),
+                  )),
+            ],
+          ),
         ],
       ),
     );
@@ -222,6 +238,7 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
 //build
   @override
   Widget build(BuildContext context) {
@@ -229,13 +246,5 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.amber,
       body: SingleChildScrollView(child: _buildView()),
     );
-  }
-
-
-//登录成功后跳转到主页
-  goToMainPage(){
-    Navigator.pop(context);
-    Navigator.push(context, MaterialPageRoute(builder: (context)=> AppPage()));
-    showToast('Login success');
   }
 }

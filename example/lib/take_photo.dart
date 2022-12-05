@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:example/main.dart';
+import 'package:example/image_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
@@ -109,9 +109,16 @@ class DisplayPictureScreen extends StatelessWidget {
       body: Column(
         children: <Widget>[
           Image.file(File(imagePath)),
-          ElevatedText(text: 'save picture',onPressed: (){
-            Navigator.pop(context);
-          },)
+          Center(
+            child: Row(children: <Widget>[
+            ElevatedButton.icon(onPressed: ()=> Navigator.pop(context),
+              icon: Icon(Icons.redo), label: Text('다시'),
+            ),
+            SizedBox(width: 20,),
+            ElevatedButton.icon(onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=>ImageScanPage())),
+              icon: Icon(Icons.done), label: Text('선택'),
+            ),
+          ]),),
         ],
       )
     );

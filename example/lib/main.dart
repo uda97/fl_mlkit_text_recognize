@@ -1,18 +1,14 @@
 import 'package:camera/camera.dart';
 import 'package:example/camera_scan.dart';
 import 'package:example/image_scan.dart';
-import 'package:example/longin.dart';
 import 'package:example/mlkit_text_recognize.dart';
 import 'package:example/take_photo.dart';
 import 'package:fl_mlkit_text_recognize/fl_mlkit_text_recognize.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_curiosity/flutter_curiosity.dart';
 import 'package:flutter_waya/flutter_waya.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-
-
-
 
 class AppPage extends StatefulWidget {
   @override
@@ -20,22 +16,117 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-
+    TextStyle mTextStyle = TextStyle(
+    color: Colors.white,
+    fontSize: 40,
+  );
 
   @override
   Widget build(BuildContext context) {
-    return ExtendedScaffold(
-        appBar: AppBarText('러너 한글'),
-        padding: const EdgeInsets.all(30),
-        backgroundColor: Colors.amber[100],
-        children: <Widget>[
-          const SizedBox(height: 10),
-          ElevatedText(
-              onPressed: () => takePhoto(), text: 'Take Photo\n 사진 찍어'),
-          const SizedBox(height: 10),
-          ElevatedText(onPressed: scanImage, text: 'Image recognition\n 이미지로 문자식별'),
-          const SizedBox(height: 10),
-        ]);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('러너 한글'),
+          backgroundColor:Color.fromRGBO(255, 112, 0, 1),
+        ),
+        backgroundColor: Color.fromRGBO(232, 243, 214, 1),
+        body: Container(
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromRGBO(192, 238, 228, 1),
+                  ),
+                  child: TextButton(
+                    onPressed: takePhoto,
+                    child: Text(
+                      "카메라",
+                      style: mTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              const Divider(
+                color: Colors.black,
+                height: 10,
+                thickness: 1,
+                indent: 20,
+                endIndent: 0,
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromRGBO(248, 249, 136, 1),
+                  ),
+                  child: TextButton(
+                    onPressed: scanImage,
+                    child: Text(
+                      "문자식별",
+                      style: mTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              const Divider(
+                color: Colors.black,
+                height: 10,
+                thickness: 1,
+                indent: 20,
+                endIndent: 0,
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromRGBO(207, 253, 225, 1),
+                  ),
+                  child: TextButton(
+                    onPressed: takePhoto,
+                    child: Text(
+                      "사전",
+                      style: mTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+              const Divider(
+                color: Colors.black,
+                height: 10,
+                thickness: 1,
+                indent: 20,
+                endIndent: 0,
+              ),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color.fromRGBO(255, 202, 200, 1),
+                  ),
+                  child: TextButton(
+                    onPressed: takePhoto,
+                    child: Text(
+                      "게임",
+                      style: mTextStyle,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+        );
+
   }
 
   void scanImage() {
@@ -64,10 +155,8 @@ class _AppPageState extends State<AppPage> {
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
-    if (hasPermission) push( TakePictureScreen(camera: firstCamera));
+    if (hasPermission) push(TakePictureScreen(camera: firstCamera));
   }
-
-
 }
 
 class ShowCode extends StatelessWidget {

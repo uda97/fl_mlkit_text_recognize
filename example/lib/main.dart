@@ -16,9 +16,11 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-    TextStyle mTextStyle = TextStyle(
-    color: Colors.white,
+
+    static TextStyle mTextStyle = TextStyle(
+    color: Colors.black87,
     fontSize: 40,
+        fontFamily: 'SingleDay',
   );
 
   @override

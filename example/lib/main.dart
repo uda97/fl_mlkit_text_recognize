@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:example/camera_scan.dart';
+import 'package:example/common/heruko_webview.dart';
 import 'package:example/image_scan.dart';
 import 'package:example/mlkit_text_recognize.dart';
 import 'package:example/take_photo.dart';
@@ -16,21 +17,21 @@ class AppPage extends StatefulWidget {
 }
 
 class _AppPageState extends State<AppPage> {
-
-    static TextStyle mTextStyle = TextStyle(
+  static TextStyle mTextStyle = TextStyle(
     color: Colors.black87,
     fontSize: 40,
-        fontFamily: 'SingleDay',
+    fontFamily: 'D2Coding',
   );
+  static var mBackgroundColor =Color.fromRGBO(255, 193, 7, 1);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('러너 한글'),
-          backgroundColor:Color.fromRGBO(255, 112, 0, 1),
+          title: Text('아이 한글'),
+          backgroundColor: Color.fromRGBO(255, 193, 7, 1),
         ),
-        backgroundColor: Color.fromRGBO(232, 243, 214, 1),
+        backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
         body: Container(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -41,7 +42,7 @@ class _AppPageState extends State<AppPage> {
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromRGBO(192, 238, 228, 1),
+                    color: mBackgroundColor,
                   ),
                   child: TextButton(
                     onPressed: takePhoto,
@@ -65,7 +66,7 @@ class _AppPageState extends State<AppPage> {
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromRGBO(248, 249, 136, 1),
+                    color: mBackgroundColor,
                   ),
                   child: TextButton(
                     onPressed: scanImage,
@@ -89,10 +90,10 @@ class _AppPageState extends State<AppPage> {
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromRGBO(207, 253, 225, 1),
+                    color: mBackgroundColor,
                   ),
                   child: TextButton(
-                    onPressed: takePhoto,
+                    onPressed: openBrowser,
                     child: Text(
                       "사전",
                       style: mTextStyle,
@@ -113,7 +114,7 @@ class _AppPageState extends State<AppPage> {
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Color.fromRGBO(255, 202, 200, 1),
+                    color: mBackgroundColor,
                   ),
                   child: TextButton(
                     onPressed: takePhoto,
@@ -126,39 +127,42 @@ class _AppPageState extends State<AppPage> {
               ),
             ],
           ),
-        )
-        );
-
+        ));
   }
 
-  void scanImage() {
-    push(const ImageScanPage());
-  }
-
-  Future<void> scanCamera() async {
-    if (!isMobile) return;
-    final bool permission = await getPermission(Permission.camera);
-    if (permission) push(const CameraScanPage());
-  }
-
-  Future<void> openCamera() async {
-    bool hasPermission = false;
-    if (isAndroid) hasPermission = await getPermission(Permission.camera);
-    if (isIOS) hasPermission = true;
-    if (hasPermission) push(const FlMlKitTextRecognizePage());
-  }
-
+  //跳转到take_photo页面
   Future<void> takePhoto() async {
     bool hasPermission = false;
     if (isAndroid) hasPermission = await getPermission(Permission.camera);
     if (isIOS) hasPermission = true;
 
-    //跳转到take_photo页面
     WidgetsFlutterBinding.ensureInitialized();
     final cameras = await availableCameras();
     final firstCamera = cameras.first;
     if (hasPermission) push(TakePictureScreen(camera: firstCamera));
   }
+}
+
+void scanImage() {
+  push(const ImageScanPage());
+}
+
+void openBrowser() {
+  push(const Browser(url: "https://www.youtube.com", title: "flutter_WebView"));
+  // push(const Browser(url: "https://rocky-eyrie-44345.herokuapp.com/", title: "flutter_WebView"));
+}
+
+Future<void> scanCamera() async {
+  if (!isMobile) return;
+  final bool permission = await getPermission(Permission.camera);
+  if (permission) push(const CameraScanPage());
+}
+
+Future<void> openCamera() async {
+  bool hasPermission = false;
+  if (isAndroid) hasPermission = await getPermission(Permission.camera);
+  if (isIOS) hasPermission = true;
+  if (hasPermission) push(const FlMlKitTextRecognizePage());
 }
 
 class ShowCode extends StatelessWidget {

@@ -136,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
 
           // Sign In
           ButtonWidget(
-            text: '들어가기 / 가입',
+            text: 'Log in',
             onPressed: () {
               goToMainPage();
             },
@@ -154,10 +154,10 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               // 文字
               const Text(
-                "약관의 보셨어요?",
+                "약관의 확인하세요",
                 style: TextStyle(
                   fontSize: 15,
-                  color: Color(0xff171717),
+                  color: Colors.black87,
                   fontWeight: FontWeight.w300,
                 ),
               ),
@@ -180,10 +180,10 @@ class _LoginPageState extends State<LoginPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("해당 계좌 없으면 즉시가입",
+              Text("회원 가입",
                   style: TextStyle(
                     fontSize: 15,
-                    color: Color(0xffbc0202),
+                    color: Colors.black87,
                     fontWeight: FontWeight.w300,
                   )),
             ],
@@ -210,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
 
           // 主标
           const Text(
-            "러노 한글",
+            "아이 한글",
             style: TextStyle(
               fontSize: 50,
               color: Colors.white,
@@ -222,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
 
           // 子标
           const Text(
-            "러노 한글 오신 것을 화영합니다.",
+            "아이 한글 오신 것을 화영합니다.",
             style: TextStyle(
               fontSize: 13,
               color: Colors.white,
